@@ -11,4 +11,4 @@ function OperationButton({ dispatch, operation  }) {
   )
 }
 
-export default OperationButton
+export default OperationButton;

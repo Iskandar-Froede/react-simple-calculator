@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React from 'react'
 import { useReducer } from 'react'
 import DigitButton from './DigitButton'
@@ -9,16 +10,19 @@ export const ACTIONS = {
   CHOOSE_OPERATION: 'choose-operation',
   CLEAR: 'clear',
   DELETE_DIGIT: 'delete-digit',
-  EVALUEATE: 'evaluate'
+  EVALUATE: 'evaluate'
 }
 
 function reducer(state, { type, payload }) {
 switch (type) {
-  case ACTIONS. ADD_DIGIT:
-  return {
-    ...state,
-    currentOperand: `${state.currentOperand || ""} ${payload.digit}`
-  }
+  case ACTIONS.ADD_DIGIT:
+    if (payload.digit === "0" && state.currentOperand === "0") return state
+    if (payload.digit === "." && state.currentOperand.includes(".")) return state
+
+    return {
+      ...state,
+      currentOperand: `${state.currentOperand || ""}${payload.digit}`,
+    }
 }
 }
 
@@ -26,7 +30,7 @@ function App() {
 
   const [{currentOperand, previousOperand, operation}, dispatch] = useReducer(reducer, {})
 
-  
+ // dispatch ({ type: ACTIONS.ADD_DIGIT, payload: { digit: 1 }})
 
   return (
     <div className='calculator-grid'>
